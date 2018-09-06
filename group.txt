@@ -1,0 +1,20 @@
+# COMP 30019 Project 1
+
+##Names/username
+
+Lukas Ekberg / sekberg
+Brent Cahill / bcahill
+
+## Modeling of Fractal Landscape
+
+We begun working on this part together and then most of the code were written by Brent.
+
+## Camera Motion
+
+Lukas implemented the camera.
+
+## Surface Properties
+
+Brent created the shaders with Phong illumination model for the terrain and for the water. Also, he implemented the change of colours in the terrain. 
+
+Lukas created the rotating sun with a point light. 
