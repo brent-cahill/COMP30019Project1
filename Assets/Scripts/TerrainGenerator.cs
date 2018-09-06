@@ -2,7 +2,17 @@
 // that height map for the y component of the vertices that will be used to
 // create the actual terrain. The surface normals are calculated via cross-
 // product and the vertex normals are calculated from those. Finally, colour is
-// added based on the height of the vertex at that location.
+// added based on the height of the vertex at that location. The implementation
+// was inspired by a multitude of sources, including:
+// https://en.wikipedia.org/wiki/Diamond-square_algorithm
+// http://jmecom.github.io/blog/2015/diamond-square/
+// https://www.youtube.com/watch?v=1HV8GbFnCik
+// 
+// With some other help from:
+// https://www.redblobgames.com/maps/terrain-from-noise/
+//
+// Clearly, however, the implementation itself is completely our own creation.
+// Any other sources are defined where they are used.
 using UnityEngine;
 
 

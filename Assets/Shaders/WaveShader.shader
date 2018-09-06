@@ -1,11 +1,5 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-// This shader is extremely similar to the PhongShader, except that we add the
-// wave functionality.
+﻿// This shader is extremely similar to the PhongShader, except that we add the
+// wave functionality, which we learned how to do in tutorial 4.
 
 Shader "Unlit/WaveShader"
 {

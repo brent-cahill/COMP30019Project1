@@ -1,12 +1,13 @@
 ﻿<Properties StartupConfiguration="{AA0F599E-E34B-6AB2-B751-D72812B1CC4E}|">
   <MonoDevelop.Ide.ItemProperties.Project_2201 PreferredExecutionTarget="Unity.Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TerrainGenerator.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Shaders/PhongShader.shader">
     <Files>
-      <File FileName="Assets/Scripts/WaterScript.cs" Line="25" Column="5" />
-      <File FileName="Assets/Scripts/TerrainGenerator.cs" Line="54" Column="75" />
+      <File FileName="Assets/Scripts/WaterScript.cs" Line="98" Column="9" />
+      <File FileName="Assets/Scripts/TerrainGenerator.cs" Line="6" Column="1" />
       <File FileName="Assets/Shaders/WaveShader.shader" Line="94" Column="70" />
-      <File FileName="Assets/Scripts/FlyingCamera.cs" Line="9" Column="32" />
-      <File FileName="Assets/Scripts/PointLight.cs" Line="20" Column="23" />
+      <File FileName="Assets/Scripts/FlyingCamera.cs" Line="12" Column="5" />
+      <File FileName="Assets/Scripts/PointLight.cs" Line="28" Column="18" />
+      <File FileName="Assets/Shaders/PhongShader.shader" Line="1" Column="38" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
