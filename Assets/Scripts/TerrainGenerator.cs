@@ -79,7 +79,7 @@ public class TerrainGenerator : MonoBehaviour
         heightMap[heightMapSide - 1, 0] = Random.Range(minHeight, maxHeight);
         heightMap[heightMapSide - 1, heightMapSide - 1] = Random.Range(minHeight, maxHeight);
 
-        // Perform the DiamondSquare algorithm, defined by a seperate function
+        // Perform the DiamondSquare algorithm, defined by a seperate method
         diamondSquare(heightMap, heightMapSide, heightRange);
 
         // Now we define the vertices as Vector3s, then initialize each vertex

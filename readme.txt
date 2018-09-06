@@ -8,9 +8,9 @@ We created a randomly-generated height map grid using the Diamond-Square algorit
 
 ## Camera Motion
 
-The camera was implemented in a "flight simulator" style, where it can move freely within the bounds of the landscape.  This was done by having the keys "WASD" to move the camera from its current position to a new position with respective key changing the position of the camera in right/left and forward/backward directions, as in gaming standard. In addition, movement of the mouse in x and y directions change the angles of the camera correspondingly. 
+The camera was implemented in a "flight simulator" style, where it can move freely within the bounds of the landscape.  This was done by having the keys "WASD" move the camera from its current position to a new position with each respective key changing the position of the camera in right/left and forward/backward directions, as is gaming standard. In addition, movement of the mouse in x and y directions changed the angle of the camera correspondingly. 
 
-To keep the camera inside the bounds of the terrain, the camera script accesses the terrain to retrieve its size and with checkBounds() check that the new camera position is still within the bounds before an update of the position of the camera. Collisions with the terrain were handled by adding a rigid body to the camera as well as a sphere collider and then a mesh collider to the terrain.
+To keep the camera inside the bounds of the terrain, the camera script accesses the terrain to retrieve its size and the method checkBounds() checks that the new camera position is still within the bounds before an update of the position of the camera. Collisions with the terrain were handled by adding a rigid body to the camera as well as a sphere collider to the camera and a mesh collider to the terrain.
 
 ## Surface Properties
 
