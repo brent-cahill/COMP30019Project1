@@ -13,7 +13,7 @@ public class PointLight : MonoBehaviour
     void Start()
     {
         // Define the colour of the Sun and its position
-        this.color = new Color(1f, 1f, 0f);
+        this.color = new Color(.5f, .4f, .2f);
         this.transform.position = new Vector3(500.0f, 0.0f, 320.0f);
     }
 
