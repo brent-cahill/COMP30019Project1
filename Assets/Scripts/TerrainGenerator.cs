@@ -1,8 +1,9 @@
 ﻿// Here, we use the DiamondSquare algorithm to generate a height map, then use
 // that height map for the y component of the vertices that will be used to
-// create the actual terrain.
+// create the actual terrain. The surface normals are calculated via cross-
+// product and the vertex normals are calculated from those. Finally, colour is
+// added based on the height of the vertex at that location.
 using UnityEngine;
-using System.Collections;
 
 
 public class TerrainGenerator : MonoBehaviour
@@ -11,22 +12,27 @@ public class TerrainGenerator : MonoBehaviour
     public PointLight Sun;
 
     // We use public parameters so that we can set them in our text editor and
-    // also adjust them easily in unity to get the most realistic results
+    // also adjust them easily in Unity to get the most realistic results
     // possible
     public int heightMapSide = 65;
     public float maxHeight = 25;
     public float minHeight = -25;
     public float heightRange = 20;
 
+    // Colours for the vertices that we will later assign based on height.
     private static Color beach = new Color(0.75f, 0.7f, 0.5f);
     private static Color grass = new Color(0.2f, 0.7f, 0.2f);
     private static Color dirt = new Color(0.8f, 0.5f, 0.25f);
     private static Color snow = new Color(1.0f, 1.0f, 1.0f);
 
+    // 2D grid that we will store the heights in, and 2D Vector3 array that we
+    // will store the vertices in before mapping from 2D to 1D. Using 2D arrays
+    // here is significantly more intuitive, and mapping them back to 1D is a
+    // simple O(n) operation, where n is the total number of vertices.
     float[,] heightMap;
     Vector3[,] vertices;
 
-    // Start() function for initialization
+    // Use this for initialization
     void Start()
     {
         // Create the MeshFilter and the MeshRenderer for the terrain
@@ -36,32 +42,39 @@ public class TerrainGenerator : MonoBehaviour
         renderer.material.shader = shader;
     }
 
-    // Update() function for each individual frame
+    // Update is called once per frame
     void Update()
     {
         MeshRenderer renderer = this.gameObject.GetComponent<MeshRenderer>();
+
+        // This ensures that the terrain is correctly shaded based on the
+        // current world position and color of the sun.
         renderer.material.SetColor("_PointLightColor", Sun.color);
-        renderer.material.SetVector("_PointLightPosition", Sun.GetWorldPosition());
+        renderer.material.SetVector("_PointLightPosition", Sun.GetPosition());
     }
 
     // Creates the terrain using the Diamond Square Algorithm
     Mesh DSTerrainGenerator()
     {
-        // Create the mesh and name it
+        // First create the mesh, and then name it
         Mesh m = new Mesh();
         m.name = "TerrainGenerator";
 
-        // Define the heightMap grid and initialize the corners to random values
+        // Define the heightMap grid of floats, which will give us our height at
+        // a given row and column value, then initialize the corners to random
+        // values
         heightMap = new float[heightMapSide, heightMapSide];
         heightMap[0, 0] = Random.Range(minHeight, maxHeight);
         heightMap[0, heightMapSide - 1] = Random.Range(minHeight, maxHeight);
         heightMap[heightMapSide - 1, 0] = Random.Range(minHeight, maxHeight);
         heightMap[heightMapSide - 1, heightMapSide - 1] = Random.Range(minHeight, maxHeight);
 
-        // Perform the DiamondSquare algorithm
+        // Perform the DiamondSquare algorithm, defined by a seperate function
         diamondSquare(heightMap, heightMapSide, heightRange);
 
-        // Now we define the vertices as Vector3s
+        // Now we define the vertices as Vector3s, then initialize each vertex
+        // to have the location defined by the iterated row, col values, but a
+        // height defined by the above heightMap
         vertices = new Vector3[heightMapSide, heightMapSide];
         for (int i = 0; i < heightMapSide; i++)
         {
@@ -104,6 +117,8 @@ public class TerrainGenerator : MonoBehaviour
             }
         }
 
+        // Now we normalize the vertex normals to ensure that they are of length
+        // less than 1.
         for (int i = 0; i < heightMapSide; i++)
         {
             for (int j = 0; j < heightMapSide; j++)
@@ -130,7 +145,10 @@ public class TerrainGenerator : MonoBehaviour
             }
         }
 
+        // Set the mesh vertices to these finalVertices
         m.vertices = finalVertices;
+
+        // Used going forward for iteration
         int numVertices = m.vertices.Length;
 
         // Define the vertex colours based on the height
@@ -154,8 +172,11 @@ public class TerrainGenerator : MonoBehaviour
                 colors[i] = beach;
             }
         }
+
+        // Set the mesh colours
         m.colors = colors;
 
+        // Set the triangles of the mesh... relatively straightforward
         int[] triangles = new int[m.vertices.Length];
         for (int i = 0; i < m.vertices.Length; i++)
             triangles[i] = i;
@@ -180,7 +201,13 @@ public class TerrainGenerator : MonoBehaviour
             }
         }
 
+        // Set the mesh normals to these final vertexNormals
         m.normals = finalNormals;
+
+        // Used to apply the mesh collider to the terrain
+        MeshCollider mCol = GetComponent<MeshCollider>();
+        mCol.sharedMesh = m;
+
         return m;
     }
 
@@ -192,6 +219,8 @@ public class TerrainGenerator : MonoBehaviour
         int lastSize = size;
         while (currSize > 2)
         {
+            // Iterate through the rows and columns for both the Diamond Step
+            // and the Square Step
             for (int i = 0; i < size - 1; i += currSize - 1)
             {
                 for (int j = 0; j < size - 1; j += currSize - 1)
@@ -250,7 +279,6 @@ public class TerrainGenerator : MonoBehaviour
                 Random.Range(-heightRange, heightRange);
         }
 
-        //Top Middle Point
         if (row == 0)
         {
             heightMap[row, midCol] = (heightMap[row, col] +
@@ -267,7 +295,6 @@ public class TerrainGenerator : MonoBehaviour
                 Random.Range(-heightRange, heightRange);
         }
 
-        //Right Middle Point
         if (col + size - 1 == heightMapSide - 1)
         {
             heightMap[midRow, col + size - 1] = (heightMap[row, col + size - 1] +
@@ -284,7 +311,6 @@ public class TerrainGenerator : MonoBehaviour
                 Random.Range(-heightRange, heightRange);
         }
 
-        //Bottom Middle Point
         if (row + size - 1 == heightMapSide - 1)
         {
             heightMap[row + size - 1, midCol] = (heightMap[row + size - 1, col] +
@@ -301,13 +327,4 @@ public class TerrainGenerator : MonoBehaviour
                 Random.Range(-heightRange, heightRange);
         }
     }
-
-    public float getHeight(float x, float z)
-    {
-        float height;
-
-        height = heightMap[(int)x, (int)z];
-        return height;
-    }
-
 }

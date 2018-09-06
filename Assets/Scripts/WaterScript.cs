@@ -1,15 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿// Here we create the Water mesh using a sufficient amount of vertices to
+// generate waves using vertex displacement on the plane.
 using UnityEngine;
 
 public class WaterScript : MonoBehaviour
 {
-
+    // Shader should implement both Phong and Waves using the Sun PointLight
     public Shader shader;
     public PointLight Sun;
 
     public int size;
-    private Color water = new Color(0.5f, 0.8f, 0.95f, 0.25f);
+    private Color water = new Color(0.5f, 0.8f, 0.95f, 1f);
     Vector3[,] waterGrid;
 
     // Use this for initialization
@@ -26,8 +26,11 @@ public class WaterScript : MonoBehaviour
     void Update()
     {
         MeshRenderer renderer = this.gameObject.GetComponent<MeshRenderer>();
+
+        // This ensures that the terrain is correctly shaded based on the
+        // current world position and color of the sun.
         renderer.material.SetColor("_PointLightColor", Sun.color);
-        renderer.material.SetVector("_PointLightPosition", Sun.GetWorldPosition());
+        renderer.material.SetVector("_PointLightPosition", Sun.GetPosition());
     }
 
     // Simple method to generate the water
@@ -38,6 +41,8 @@ public class WaterScript : MonoBehaviour
 
         waterGrid = new Vector3[size, size];
 
+        // Create a vertex for every integer in the size of the plane,
+        // very simple
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
@@ -89,6 +94,11 @@ public class WaterScript : MonoBehaviour
             normals[i] = Vector3.up;
         }
         m.normals = normals;
+
+        // Used to apply the mesh collider to the terrain
+        MeshCollider mCol = GetComponent<MeshCollider>();
+        mCol.sharedMesh = m;
+
         return m;
     }
 }

@@ -116,6 +116,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 12543508}
+  - component: {fileID: 12543506}
   - component: {fileID: 12543505}
   m_Layer: 0
   m_Name: Terrain
@@ -132,15 +133,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 12543504}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 866874e419546422683bebb8c18cbf6f, type: 3}
+  m_Script: {fileID: 11500000, guid: a7225727078e26448a0dd2d3872de86d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   shader: {fileID: 4800000, guid: 5b2fefba56f6741b9934d19fd0610392, type: 3}
   Sun: {fileID: 773038836}
   heightMapSide: 65
   maxHeight: 25
-  minHeight: -15
-  heightRange: 15
+  minHeight: -25
+  heightRange: 20
+--- !u!64 &12543506
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 12543504}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 0}
 --- !u!4 &12543508
 Transform:
   m_ObjectHideFlags: 0
@@ -167,6 +182,8 @@ GameObject:
   - component: {fileID: 273953349}
   - component: {fileID: 273953348}
   - component: {fileID: 273953353}
+  - component: {fileID: 273953355}
+  - component: {fileID: 273953354}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -256,8 +273,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sens: 140
-  velocity: 50
+  velocity: 10
   terrain: {fileID: 12543505}
+  rigid: {fileID: 273953355}
+--- !u!135 &273953354
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 273953347}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &273953355
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 273953347}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &773038835
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1968635184}
   - component: {fileID: 1968635183}
+  - component: {fileID: 1968635186}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -397,3 +443,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &1968635186
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1968635182}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 0}

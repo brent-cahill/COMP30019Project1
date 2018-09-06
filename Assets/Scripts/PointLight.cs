@@ -17,7 +17,7 @@ public class PointLight : MonoBehaviour
     {
         transform.RotateAround(new Vector3(32.0f, 0.0f, 32.0f), Vector3.forward, speed * Time.deltaTime);
     }
-    public Vector3 GetWorldPosition()
+    public Vector3 GetPosition()
     {
         return this.transform.position;
     }

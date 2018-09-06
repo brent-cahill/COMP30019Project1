@@ -6,24 +6,28 @@ using UnityEngine;
 public class FlyingCamera : MonoBehaviour
 {
     public float sens = 140;
-    public float velocity = 20;
+    public float velocity = 10;
     public TerrainGenerator terrain;
+    public Rigidbody rigid;
     float distToBound = 3f;
-    float distToTerrain = 2f;
 
     float yaw;
-    float pitch=40.0f;
+    float pitch = 40.0f;
 
     void Start()
     {
         //Center mouse 
         Cursor.lockState = CursorLockMode.Locked;
+
     }
 
     void Update()
     {
         Mouse();
         WASD();
+        //Avoid forces to be applied to camera
+        rigid.angularVelocity = Vector3.zero; 
+        rigid.velocity = Vector3.zero; 
     }
 
     void Mouse()
@@ -33,10 +37,11 @@ public class FlyingCamera : MonoBehaviour
         pitch -= sens * Input.GetAxis("Mouse Y") * Time.deltaTime;
 
         transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+        
     }
     void WASD()
     {
-        //Changes position with keys 
+        //Changes position with keys with respect to current position 
         Vector3 pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
         if (Input.GetKey(KeyCode.W))
@@ -60,7 +65,8 @@ public class FlyingCamera : MonoBehaviour
 
     void checkBounds(Vector3 pos)
     {
-        float height = terrain.getHeight(transform.position.x, transform.position.z);
+        // Make sure that camera is within the bounds of terrain and that it
+        // doesn't go through water Collider handles collision with 
 
         if (transform.position.x > terrain.heightMapSide- distToBound) {
             pos.x = terrain.heightMapSide- distToBound;
@@ -77,15 +83,6 @@ public class FlyingCamera : MonoBehaviour
         {
             pos.z = 0.0f+distToBound;
         }
-        if (transform.position.y < height+distToTerrain)
-        {
-           pos.y = height+distToTerrain;
-        }
-        if (transform.position.y < distToTerrain)
-        {
-            pos.y = distToTerrain;
-        }
-
         transform.position = pos;
     }
 }
