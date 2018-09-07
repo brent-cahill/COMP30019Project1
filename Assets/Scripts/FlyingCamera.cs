@@ -41,7 +41,7 @@ public class FlyingCamera : MonoBehaviour
     }
     void WASD()
     {
-        //Changes position with keys with respect to current position 
+        //Change cameras position with keys with respect to current position 
         Vector3 pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
         if (Input.GetKey(KeyCode.W))
@@ -65,8 +65,9 @@ public class FlyingCamera : MonoBehaviour
 
     void checkBounds(Vector3 pos)
     {
-        // Make sure that camera is within the bounds of terrain and that it
-        // doesn't go through water Collider handles collision with 
+        // Make sure that the camera is within the bounds of terrain
+        // If the camera is at the boundary: change the cameras position to the boundary.
+        // Collider handles collision with terrain and water
 
         if (transform.position.x > terrain.heightMapSide- distToBound) {
             pos.x = terrain.heightMapSide- distToBound;
