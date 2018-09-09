@@ -4,7 +4,7 @@ Implementation of a randomly-generated landscape in Unity, explored using a flig
 
 ## Modeling of Fractal Landscape
 
-We created a randomly-generated height map grid using the Diamond-Square algorithm. The heights generated were stored in a 2D array of floats, which were then mapped back to the Unity 1D convention. Finally, the surface normals were then calculated using the cross-product of the vertices, and the vertex normals were calculated from these surface normals.
+We created a randomly-seeded height map grid using the Diamond-Square algorithm, which uses stochastic fractal generation to determine vertex heights. These vertices generated were stored in a 2D array of floats, which were then mapped back to the Unity 1D convention. Finally, the surface normals were then calculated using the cross-product of the vertices, and the vertex normals were calculated from these surface normals.
 
 ## Camera Motion
 
